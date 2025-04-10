@@ -2,379 +2,290 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Monica | Investment Trading Dashboard</title>
+  <title>Trading Dashboard</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     body {
-            font-family: 'Segoe UI', sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background: #f3f4f6;
-        }
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: #f3f4f6;
+    }
 
-        .verification-container {
-            background: #fff;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            text-align: center;
-        }
+    .verification-container {
+      background: #fff;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+      text-align: center;
+    }
 
-        .verification-logo {
-            width: 48px;
-            height: 48px;
-            margin-bottom: 16px;
-        }
+    .verification-logo {
+      width: 48px;
+      height: 48px;
+      margin-bottom: 16px;
+    }
 
-        .verification-title {
-            font-size: 20px;
-            margin-bottom: 8px;
-        }
+    .verification-title {
+      font-size: 20px;
+      margin-bottom: 8px;
+    }
 
-        .verification-subtitle {
-            font-size: 14px;
-            color: #6b7280;
-            margin-bottom: 24px;
-        }
+    .verification-subtitle {
+      font-size: 14px;
+      color: #6b7280;
+      margin-bottom: 24px;
+    }
 
-        .verification-input {
-            padding: 10px;
-            width: 100%;
-            max-width: 300px;
-            margin-bottom: 16px;
-            font-size: 14px;
-            border-radius: 6px;
-            border: 1px solid #d1d5db;
-        }
+    .verification-input {
+      padding: 10px;
+      width: 100%;
+      max-width: 300px;
+      margin-bottom: 16px;
+      font-size: 14px;
+      border-radius: 6px;
+      border: 1px solid #d1d5db;
+    }
 
-        .verification-button {
-            padding: 10px 20px;
-            background: #3b82f6;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-size: 14px;
-            cursor: pointer;
-        }
+    .verification-button {
+      padding: 10px 20px;
+      background: #3b82f6;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      cursor: pointer;
+    }
 
-        .error-message {
-            display: none;
-            margin-top: 12px;
-            color: #ef4444;
-            align-items: center;
-            font-size: 13px;
-            gap: 6px;
-        }
+    .error-message {
+      display: none;
+      margin-top: 12px;
+      color: #ef4444;
+      font-size: 13px;
+    }
 
-        .security-notice {
-            margin-top: 16px;
-            font-size: 12px;
-            color: #6b7280;
-        }
+    .dashboard {
+      display: none;
+      width: 100%;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+    }
 
-        .dashboard {
-            display: none;
-            width: 100%;
-            max-width: 800px;
-            margin: 40px auto;
-            padding: 20px;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-        }
+    .balance-section {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
 
-        .balance-section {
-            font-size: 18px;
-            margin-bottom: 20px;
-        }
+    .platform-tabs, .asset-tabs, .chart-timescale, .trade-section {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
 
-        .platform-tabs, .asset-tabs, .chart-timescale, .hmr-times, .trade-section {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 16px;
-        }
+    .platform-tab, .asset-tab, .timescale-btn {
+      background: #f3f4f6;
+      padding: 8px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 12px;
+    }
 
-        .platform-tab, .asset-tab, .timescale-btn {
-            background: #f3f4f6;
-            padding: 8px 12px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 12px;
-        }
+    .active {
+      background: #3b82f6;
+      color: white;
+    }
 
-        .active {
-            background: #3b82f6;
-            color: white;
-        }
+    .asset-title {
+      font-size: 20px;
+      font-weight: bold;
+    }
 
-        .asset-title {
-            font-size: 20px;
-            font-weight: bold;
-        }
+    .down { color: #ef4444; }
+    .up { color: #22c55e; }
 
-        .down { color: #ef4444; }
-        .up { color: #22c55e; }
+    .current-price {
+      font-size: 28px;
+      margin-top: 8px;
+    }
 
-        .current-price {
-            font-size: 28px;
-            margin-top: 8px;
-        }
+    .price-row {
+      font-size: 14px;
+      display: flex;
+      justify-content: space-between;
+    }
 
-        .price-row {
-            font-size: 14px;
-            display: flex;
-            justify-content: space-between;
-        }
+    .chart-container {
+      height: 250px;
+      margin-bottom: 20px;
+    }
 
-        .chart-container {
-            height: 250px;
-            margin-bottom: 20px;
-        }
+    .chart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
 
-        .chart-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
+    .divider {
+      height: 1px;
+      background: #e5e7eb;
+      margin: 20px 0;
+    }
 
-        .divider {
-            height: 1px;
-            background: #e5e7eb;
-            margin: 20px 0;
-        }
+    .trade-box {
+      flex: 1;
+      padding: 12px;
+      border-radius: 10px;
+      background: #f9fafb;
+    }
 
-        .trade-box {
-            flex: 1;
-            padding: 12px;
-            border-radius: 10px;
-            background: #f9fafb;
-        }
+    .sell-type { color: #ef4444; }
+    .buy-type { color: #22c55e; }
 
-        .sell-type { color: #ef4444; }
-        .buy-type { color: #22c55e; }
+    .trade-price {
+      font-size: 16px;
+      margin: 8px 0;
+    }
 
-        .trade-price {
-            font-size: 16px;
-            margin: 8px 0;
-        }
+    .progress-container {
+      background: #e5e7eb;
+      height: 6px;
+      border-radius: 6px;
+      margin-bottom: 8px;
+    }
 
-        .progress-container {
-            background: #e5e7eb;
-            height: 6px;
-            border-radius: 6px;
-            margin-bottom: 8px;
-        }
+    .progress-bar {
+      height: 6px;
+      border-radius: 6px;
+    }
 
-        .progress-bar {
-            height: 6px;
-            border-radius: 6px;
-        }
+    .sell-bar { width: 47%; background: #ef4444; }
+    .buy-bar { width: 53%; background: #22c55e; }
 
-        .sell-bar { width: 47%; background: #ef4444; }
-        .buy-bar { width: 53%; background: #22c55e; }
+    .percentage {
+      font-size: 13px;
+    }
 
-        .percentage {
-            font-size: 13px;
-        }
+    .withdraw-btn {
+      position: fixed;
+      top: 30px;
+      right: 30px;
+      background-color: #3b82f6;
+      color: white;
+      padding: 10px 18px;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 2px 10px rgba(59, 130, 246, 0.3);
+      z-index: 10;
+    }
 
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
-            20%, 40%, 60%, 80% { transform: translateX(5px); }
-        }
-		
-		.withdraw-btn {
-    position: fixed;
-    top: 30px;
-    right: 30px;
-    background-color: #3b82f6;
-    color: white;
-    padding: 10px 18px;
-    border: none;
-    border-radius: 8px;
-    font-size: 14px;
-    cursor: pointer;
-    box-shadow: 0 2px 10px rgba(59, 130, 246, 0.3);
-    z-index: 10;
-}
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      backdrop-filter: blur(5px);
+      background-color: rgba(0,0,0,0.4);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+    }
 
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    backdrop-filter: blur(5px);
-    background-color: rgba(0,0,0,0.4);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 100;
-}
+    .modal {
+      background: white;
+      padding: 30px;
+      border-radius: 14px;
+      text-align: center;
+      max-width: 360px;
+      width: 90%;
+      box-shadow: 0 12px 25px rgba(0,0,0,0.2);
+      animation: fadeInScale 0.3s ease;
+    }
 
-.modal {
-    background: white;
-    padding: 30px;
-    border-radius: 14px;
-    text-align: center;
-    max-width: 360px;
-    width: 90%;
-    box-shadow: 0 12px 25px rgba(0,0,0,0.2);
-    animation: fadeInScale 0.3s ease;
-}
+    .modal-icon {
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
 
-.modal-icon {
-    font-size: 36px;
-    margin-bottom: 10px;
-}
+    .modal-title {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #ef4444;
+    }
 
-.modal-title {
-    font-size: 20px;
-    font-weight: 600;
-    margin-bottom: 8px;
-    color: #ef4444;
-}
+    .modal-text {
+      font-size: 14px;
+      color: #374151;
+      margin-bottom: 20px;
+    }
 
-.modal-text {
-    font-size: 14px;
-    color: #374151;
-    margin-bottom: 20px;
-}
+    .modal-close-btn {
+      padding: 8px 16px;
+      background: #3b82f6;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      cursor: pointer;
+    }
 
-.modal-close-btn {
-    padding: 8px 16px;
-    background: #3b82f6;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 14px;
-    cursor: pointer;
-}
-
-@keyframes fadeInScale {
-    from {
+    @keyframes fadeInScale {
+      from {
         opacity: 0;
         transform: scale(0.9);
-    }
-    to {
+      }
+      to {
         opacity: 1;
         transform: scale(1);
+      }
     }
-	
-	.withdraw-btn {
-    position: fixed;
-    top: 30px;
-    right: 30px;
-    background-color: #3b82f6;
-    color: white;
-    padding: 10px 18px;
-    border: none;
-    border-radius: 8px;
-    font-size: 14px;
-    cursor: pointer;
-    box-shadow: 0 2px 10px rgba(59, 130, 246, 0.3);
-    z-index: 10;
-}
 
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    backdrop-filter: blur(5px);
-    background-color: rgba(0,0,0,0.4);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 100;
-}
-
-.modal {
-    background: white;
-    padding: 30px;
-    border-radius: 14px;
-    text-align: center;
-    max-width: 360px;
-    width: 90%;
-    box-shadow: 0 12px 25px rgba(0,0,0,0.2);
-    animation: fadeInScale 0.3s ease;
-}
-
-.modal-icon {
-    font-size: 36px;
-    margin-bottom: 10px;
-}
-
-.modal-title {
-    font-size: 20px;
-    font-weight: 600;
-    margin-bottom: 8px;
-    color: #ef4444;
-}
-
-.modal-text {
-    font-size: 14px;
-    color: #374151;
-    margin-bottom: 20px;
-}
-
-.modal-close-btn {
-    padding: 8px 16px;
-    background: #3b82f6;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 14px;
-    cursor: pointer;
-}
-
-@keyframes fadeInScale {
-    from {
-        opacity: 0;
-        transform: scale(0.9);
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+      20%, 40%, 60%, 80% { transform: translateX(5px); }
     }
-    to {
-        opacity: 1;
-        transform: scale(1);
+
+    .portal-title {
+      color: #1d4ed8;
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 8px;
+      text-align: center;
     }
-}
-
-}
-
-.portal-title {
-  color: #1d4ed8; /* Tailwind blue-700 */
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 8px;
-  display: block;
-  text-align: center;
-}
-
   </style>
 </head>
 <body>
+
   <!-- Verification Gateway -->
   <div class="verification-container" id="verificationGateway">
-    <!-- Verification content here (logo, title, input, error message, etc.) -->
+    <img class="verification-logo" src="https://cdn-icons-png.flaticon.com/512/2936/2936954.png" alt="verify">
+    <div class="verification-title">Enter Activation Code</div>
+    <div class="verification-subtitle">This portal requires a valid access code to continue.</div>
+    <input id="activationCode" class="verification-input" type="text" placeholder="Activation Code" />
+    <button id="verifyButton" class="verification-button">Verify</button>
+    <div id="errorMessage" class="error-message">❌ Invalid code. Please try again.</div>
   </div>
 
   <!-- Trading Dashboard -->
-  
   <div class="dashboard" id="tradingDashboard">
     <button class="withdraw-btn" onclick="openModal()">Withdraw</button>
-
-    <div class="dashboard-header">
-  <span class="portal-title">GENESIS MINING | BTC INVESTMENTING PORTAL</span>
-</div>
-<div class="balance-section">37,270.00 EUR</div>
-	
+    <div class="portal-title">GENESIS MINING | BTC INVESTMENTING PORTAL</div>
+    <div class="balance-section">37,270.00 EUR</div>
 
     <div class="platform-tabs">
       <div class="platform-tab active">Bulleri Monica</div>
@@ -384,10 +295,7 @@
     </div>
 
     <div class="asset-section">
-      <div class="asset-header">
-        <div class="asset-title">BTC <span class="down">▼</span></div>
-      </div>
-
+      <div class="asset-title">BTC <span class="down">▼</span></div>
       <div class="asset-tabs">
         <div class="asset-tab active">Chart</div>
         <div class="asset-tab">Analytics</div>
@@ -440,15 +348,12 @@
     </div>
   </div>
 
-  <!-- Modal Overlay -->
+  <!-- Modal -->
   <div class="modal-overlay" id="modalOverlay">
     <div class="modal">
       <div class="modal-icon">⚠️</div>
       <div class="modal-title">Withdrawal Blocked</div>
-      <div class="modal-text">
-        Your withdrawal request cannot be completed at this time.<br>
-        Please contact your account manager or verify your identity.
-      </div>
+      <div class="modal-text">Your withdrawal request cannot be completed at this time.<br>Please contact your account manager or verify your identity.</div>
       <button class="modal-close-btn" onclick="closeModal()">Close</button>
     </div>
   </div>
@@ -474,17 +379,13 @@
         localStorage.setItem('verified', 'true');
         showDashboard();
       } else {
-        showError();
+        errorMessage.style.display = 'block';
+        activationCodeInput.style.borderColor = '#ef4444';
+        activationCodeInput.style.animation = 'shake 0.5s';
+        setTimeout(() => {
+          activationCodeInput.style.animation = '';
+        }, 500);
       }
-    }
-
-    function showError() {
-      errorMessage.style.display = 'flex';
-      activationCodeInput.style.borderColor = '#ef4444';
-      activationCodeInput.style.animation = 'shake 0.5s';
-      setTimeout(() => {
-        activationCodeInput.style.animation = '';
-      }, 500);
     }
 
     function showDashboard() {
@@ -494,23 +395,24 @@
       initDashboard();
     }
 
-    function initDashboard() {
-      document.querySelectorAll('.platform-tab').forEach(tab =>
-        tab.addEventListener('click', () => {
-          document.querySelectorAll('.platform-tab').forEach(t => t.classList.remove('active'));
-          tab.classList.add('active');
-        })
-      );
+    function openModal() {
+      document.getElementById('modalOverlay').style.display = 'flex';
+    }
 
-      document.querySelectorAll('.asset-tab').forEach(tab =>
+    function closeModal() {
+      document.getElementById('modalOverlay').style.display = 'none';
+    }
+
+    function initDashboard() {
+      document.querySelectorAll('.platform-tab, .asset-tab, .timescale-btn').forEach(tab =>
         tab.addEventListener('click', () => {
-          document.querySelectorAll('.asset-tab').forEach(t => t.classList.remove('active'));
+          tab.parentElement.querySelectorAll('.active').forEach(t => t.classList.remove('active'));
           tab.classList.add('active');
         })
       );
 
       const ctx = document.getElementById('btcChart').getContext('2d');
-      window.btcChart = new Chart(ctx, {
+      new Chart(ctx, {
         type: 'line',
         data: {
           labels: Array.from({ length: 24 }, (_, i) => `${i}:00`),
@@ -534,49 +436,6 @@
           }
         }
       });
-
-      document.querySelectorAll('.timescale-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          document.querySelectorAll('.timescale-btn').forEach(t => t.classList.remove('active'));
-          btn.classList.add('active');
-          updateChart(btn.textContent);
-        });
-      });
-
-      function updateChart(timescale) {
-        let count = 24;
-        let labels = [], data = [];
-        switch (timescale) {
-          case '1H':
-            count = 24;
-            labels = Array.from({ length: count }, (_, i) => `${i}:00`);
-            break;
-          case '4H':
-            count = 7;
-            labels = Array.from({ length: count }, (_, i) => `${i * 4}:00`);
-            break;
-          case '1D':
-            count = 30;
-            labels = Array.from({ length: count }, (_, i) => `Day ${i + 1}`);
-            break;
-          case '1W':
-            count = 12;
-            labels = Array.from({ length: count }, (_, i) => `Week ${i + 1}`);
-            break;
-        }
-        data = Array.from({ length: count }, () => Math.random() * 1000 + 75000);
-        window.btcChart.data.labels = labels;
-        window.btcChart.data.datasets[0].data = data;
-        window.btcChart.update();
-      }
-    }
-
-    function openModal() {
-      document.getElementById("modalOverlay").style.display = "flex";
-    }
-
-    function closeModal() {
-      document.getElementById("modalOverlay").style.display = "none";
     }
   </script>
 </body>
